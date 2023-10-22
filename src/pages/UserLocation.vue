@@ -7,7 +7,9 @@
                   <div class="ui segment"> 
                       <div class="field">
                           <div class="ui right icon input large">
-                              <input type="text" placeholder="Enter" v-model="address">
+                              <input  type="text" placeholder="Enter" 
+                                      v-model="address"  
+                                      ref="autocomplete">
                               <button class="ui button" @click="locatorButtonPressed">Go</button>
                           </div>
                       </div>
@@ -34,6 +36,27 @@ export default{
             address:""
         }
     },
+    mounted() {
+      let autocomplete = new google.maps.places.Autocomplete(
+        this.$refs["autocomplete"],
+        {
+          bounds: new google.maps.LatLngBounds(
+            new google.maps.LatLng(45.4215296, -75.6971931)
+          ),
+        }
+      );
+  
+      autocomplete.addListener("place_changed", () => {
+        let place = autocomplete.getPlace();
+  
+        //console.log(place);
+        this.showUserLocationOnTheMap(
+            place.geometry.location.lat(),
+            place.geometry.location.lng()
+        );
+      });
+    },
+  
 
     methods: {
         locatorButtonPressed(){
