@@ -1,20 +1,27 @@
 <template>
-  <section  class="ui two column centered grid">
-    <div class="column">
-        <form action="" class="ui segment large form">
-            <div class="ui message red"> </div>
-            <div class="ui segment"> 
-                <div class="field">
-                    <div class="ui right icon input large">
-                        <input type="text" placeholder="Enter" v-model="address">
-                        <button class="ui button" @click="locatorButtonPressed">Go</button>
-                    </div>
-                </div>
-                <button class="ui button">Go</button>
-            </div>
-        </form>
+    <div>
+        <section  class="ui two column centered grid" style="position:relative;z-index:1">
+          <div class="column">
+              <form action="" class="ui segment large form">
+                  <div class="ui message red"> </div>
+                  <div class="ui segment"> 
+                      <div class="field">
+                          <div class="ui right icon input large">
+                              <input type="text" placeholder="Enter" v-model="address">
+                              <button class="ui button" @click="locatorButtonPressed">Go</button>
+                          </div>
+                      </div>
+                      <button class="ui button">Go</button>
+                  </div>
+              </form>
+          </div>
+        </section>
+        <section id="map">
+      
+        </section>
+
     </div>
-  </section>
+
 </template>
 
 <script>
@@ -37,6 +44,7 @@ export default{
                         console.log(position.coords.latitude)
                         console.log(position.coords.longitude)
                         this.getAddressFrom(position.coords.latitude, position.coords.longitude)
+                        this.showUserLocationOnTheMap(position.coords.latitude, position.coords.longitude)
                     },
                     error =>{
                         console.log(error.message)
@@ -60,14 +68,56 @@ export default{
             .catch(err=>{
                 console.log(err.message);
             })
+        },
+        showUserLocationOnTheMap(lat, long){
+            // create a map object
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: new google.maps.LatLng(lat, long),
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+            });
+
+            // add marker
+            new google.maps.Marker({
+            position: new google.maps.LatLng(lat, long),
+            map: map,
+            });
         }
     }
 }
 </script>
 
 <style>
-.ui.button{
-    background-color: #ff5e5f;
-    color: #fff;
-} 
+  .ui.button,
+  .dot.circle.icon {
+    background-color: #ff5a5f;
+    color: white;
+  }
+  
+  .pac-icon {
+    display: none;
+  }
+  
+  .pac-item {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .pac-item:hover {
+    background-color: #ececec;
+  }
+  
+  .pac-item-query {
+    font-size: 16px;
+  }
+  
+#map {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: red;
+  }
 </style>
