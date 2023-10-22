@@ -25,3 +25,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ### semantic-ui
 
 https://semantic-ui.com/introduction/advanced-usage.html
+
+### Geocoding API
+
+https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&key=AIzaSyBnPzzRlPOXICxku3udeR_xMModID4ir8w")
