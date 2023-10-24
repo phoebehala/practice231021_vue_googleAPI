@@ -7,13 +7,24 @@
                   <div class="ui segment"> 
                       <div class="field">
                           <div class="ui right icon input large">
-                              <input  type="text" placeholder="Enter" 
-                                      v-model="address"  
+                                <!-- <input  type="querryText" placeholder="Enter"
+                                      v-model="querryText"
+                                      @focus="clearInput"  
+                                      @keydown.enter="searchPlaces"
+                                      @input="searchPlaces"
                                       ref="autocomplete">
-                              <button class="ui button" @click="locatorButtonPressed">Go</button>
+                               <button class="ui button" @click="searchPlaces">Go</button> -->
                           </div>
                       </div>
-                      <button class="ui button">Go</button>
+                      <div class="field">
+                          <div class="ui right icon input large">
+                            <input  type="text" placeholder="Enter" 
+                                      @focus="clearInput"  
+                                      ref="autocomplete">
+                              <button class="ui button" @click="locatorButtonPressed">My current place</button>
+                          </div>
+                      </div>
+                      
                   </div>
               </form>
           </div>
@@ -33,9 +44,11 @@ export default{
     // instant property
     data(){
         return{
-            address:""
+            address:"",
+            //querryText:"",
         }
     },
+    
     mounted() {
       let autocomplete = new google.maps.places.Autocomplete(
         this.$refs["autocomplete"],
@@ -59,6 +72,28 @@ export default{
   
 
     methods: {
+        clearInput() {
+            this.address = '';
+        },
+        /*
+        searchPlaces(){
+          
+            axios.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query="+this.querryText+"&key="+process.env.VITE_APP_GOOGLE_MAP_API_KEY)
+            .then(res =>{
+                if(res.data.error_message){
+                    console.log(res.data.error_message);
+                }else{
+                    console.log(res.data);
+                    
+                }
+            })
+            .catch(err=>{
+                console.log(err.message);
+            })
+            
+            
+        },
+        */
         locatorButtonPressed(){
             console.log('hi')
             if(navigator.geolocation){
@@ -79,7 +114,8 @@ export default{
         },
 
         getAddressFrom(lat, long){
-            axios.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&key=AIzaSyBnPzzRlPOXICxku3udeR_xMModID4ir8w")
+            //console.log(process.env.VUE_APP_GOOGLE_MAP_API_KEY);  //???
+            axios.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&key="+process.env.VUE_APP_GOOGLE_MAP_API_KEY)
             .then(res =>{
                 if(res.data.error_message){
                     console.log(res.data.error_message);

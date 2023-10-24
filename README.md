@@ -29,10 +29,10 @@ https://semantic-ui.com/introduction/advanced-usage.html
 ### Geocoding API
 
 - end point:
-  https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&key=AIzaSyBnPzzRlPOXICxku3udeR_xMModID4ir8w"
+  https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&key=REACT_APP_GOOGLE_MAP_API_KEY "
 
 ### Maps JavaScript API
 
 - display map
 - end point:
-  https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBnPzzRlPOXICxku3udeR_xMModID4ir8w
+  https://maps.googleapis.com/maps/api/js?libraries=places&key=REACT_APP_GOOGLE_MAP_API_KEY
